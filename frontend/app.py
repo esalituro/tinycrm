@@ -10,7 +10,9 @@ st.header("Add Contact")
 name = st.text_input("Name")
 email = st.text_input("Email")
 if st.button("Save Contact"):
-    response = requests.post(f"{API_URL}/contacts/", params={"name": name, "email": email})
+    response = requests.post(
+        f"{API_URL}/contacts/", params={"name": name, "email": email}
+    )
     st.write(response.json())
 
 # Display Contacts

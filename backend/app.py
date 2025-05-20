@@ -10,9 +10,11 @@ client = MongoClient("mongodb://db:27017/")
 db = client["tinycrm"]
 contacts_collection = db["contacts"]
 
+
 @app.get("/")
 def read_root():
     return {"message": "TinyCRM API is running!"}
+
 
 @app.post("/contacts/")
 def add_contact(name: str, email: str):
@@ -20,9 +22,10 @@ def add_contact(name: str, email: str):
     result = contacts_collection.insert_one(contact)
 
     # Attach the generated ID as a string
-    contact["_id"] = str(result.inserted_id)  
+    contact["_id"] = str(result.inserted_id)
 
     return JSONResponse(content={"message": "Contact added!", "contact": contact})
+
 
 @app.get("/contacts/")
 def get_contacts():
