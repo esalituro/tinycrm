@@ -6,11 +6,31 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Install dependencies
-        run: pip install tox
+        run: pip install "tox>=4.0"
+
       - name: Run tests
-        run: tox
+        run: tox run -e py310
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: pip install "tox>=4.0" black
+
+      - name: Run formatting check with tox
+        run: tox run -e format
+
+      - name: Auto-format code if needed
+        run: black backend frontend
+
+      - name: Commit formatted code (if necessary)
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Auto-format code using Black"
