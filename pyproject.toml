@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tinycrm"
+version = "1.0.0"
+description = "A lightweight CRM system"
+authors = [{ name = "Eric", email = "eric@example.com" }]
+dependencies = [
+    "pytest",
+    "pymongo",
+    "fastapi",
+    "streamlit"
+]
+
+[tool.setuptools]
+packages = ["backend", "frontend"]
+
+[tool.tox]
+requires = ["tox>=4.19"]
+envlist = ["py310", "format", "lint", "test"]
+
+[tool.tox.testenv.py310]
+deps = ["pytest", "pymongo", "fastapi", "streamlit"]
+commands = ["pytest tests/"]
+
+[tool.tox.testenv.lint]
+deps = ["flake8"]
+commands = ["flake8 backend frontend"]
+
+[tool.tox.testenv.format]
+deps = ["black"]
+commands = ["black --check backend frontend"]
