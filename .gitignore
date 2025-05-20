@@ -1,18 +1,17 @@
-# Visual Studio-specific ignores
-.vscode/
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
-bin/
-obj/
-*.pdb
-*.exe
-*.dll
-*.cache
-*.log
+# 📝 General ignores
+.DS_Store
+Thumbs.db
+logs/
+.history/
 
-# Python-specific ignores
+# 🚀 Visual Studio Code ignores
+.vscode/
+*.code-workspace
+workspaceStorage/
+.settings/
+.vscode-test/
+
+# 🐍 Python-specific ignores
 __pycache__/
 *.pyc
 *.pyo
@@ -40,6 +39,8 @@ docs/_build/
 target/
 .ipynb_checkpoints
 .python-version
+
+# 🏗 Virtual Environment & Package Manager ignores
 .env
 .venv
 env/
@@ -51,3 +52,7 @@ venv.bak/
 .dmypy.json
 .pyre/
 .idea/
+bin/
+
+# ⚡ Extra ignores for VS Code Python development
+.vscode-test/
