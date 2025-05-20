@@ -1,6 +1,24 @@
 version: "3"
 
 tasks:
+  act-container:
+    desc: "Run act inside a Linux container"
+    cmds:
+      - docker run --rm -it -v $(pwd):/workspace -v /Users/$USER/.docker/run/docker.sock:/var/run/docker.sock -w /workspace python:3.10 /bin/bash  -c "
+        apt update &&
+        apt install -y curl nodejs npm &&
+        curl -sSL https://raw.githubusercontent.com/nektos/act/master/install.sh | bash &&
+        ./bin/act --env ACT_DISABLE_COMMIT=true -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest --container-architecture linux/amd64"
+
+  act-container-bash:
+    desc: "Run bash inside a Linux container"
+    cmds:
+      - docker run --rm -it -v $(pwd):/workspace -v /Users/$USER/.docker/run/docker.sock:/var/run/docker.sock -w /workspace python:3.10 /bin/bash  -c "
+        apt update &&
+        apt install -y curl &&
+        curl -sSL https://raw.githubusercontent.com/nektos/act/master/install.sh | bash &&
+        /bin/bash"
+  
   pull:
     desc: "Pull the latest images for TinyCRM"
     cmds:
@@ -43,3 +61,18 @@ tasks:
       - task clean
       - task build
       - task up
+
+  format:
+    desc: "Run Black to format code"
+    cmds:
+      - black backend frontend
+  
+  tox:
+    desc: "Run tests using tox"
+    cmds:
+      - tox
+
+  tox-clean:
+    desc: "Recreate tox environments for a fresh test run"
+    cmds:
+      - tox --recreate
